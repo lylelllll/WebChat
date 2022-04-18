@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-    <div>
-    HOME
+    <style type="text/css">
+        .my-grid{
+            border: 1px solid blue;
+        }
+    </style>
+    <div class="container">
+                <span class="material-icons-outlined">
+
+</span>
+        <div class="my-grid d-flex flex-row">
+            <p class="m-auto">Item</p>
+            <p class="m-auto">Item</p>
+            <p class="m-auto">Item<img src="{% static 'pics/logo_250_250.png'%}"></p>
+
+        </div>
     </div>
 {% endblock content %}
