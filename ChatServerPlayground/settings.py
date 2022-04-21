@@ -30,9 +30,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'account.Account'
+
 INSTALLED_APPS = [
     #My apps
     'personal',
+    'account',
 
     #third party apps
     'django.contrib.admin',
@@ -77,7 +80,7 @@ WSGI_APPLICATION = 'ChatServerPlayground.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DB_NAME = "codingwithmitch_chat_dev"
+DB_NAME = "webchat_dev"
 DB_USER = "django"
 DB_PASSWORD = "Liangshang12"
 DATABASES = {
