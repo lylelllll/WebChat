@@ -34,11 +34,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 AUTH_USER_MODEL = 'account.Account'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'account.backends.CaseInsensitiveModelBackend',
+    )
 
 INSTALLED_APPS = [
     #My apps
     'personal',
     'account',
+    'friend',#python manage.py makemigrations friend
 
     #third party apps
     'django.contrib.admin',
