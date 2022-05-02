@@ -9,7 +9,7 @@
 			<a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
 		</h5>
 		<form class="search-bar justify-content-start" onsubmit="return executeQuery();">
-			<input type="text" class="form-control" name="q" id="id_q_large" placeholder="Search..." >
+			<input type="text" class="form-control" name="q" id="id_q_large" placeholder="Search...">
 		</form>
 
 		<div class="d-flex flex-row-reverse flex-grow-1">
@@ -36,8 +36,14 @@
 									</div>
 								</div>
 							</div>
-                            <a class="btn btn-outline-primary m-2" href="{% url 'account:view' user_id=request.user.id %}">Account</a>
-                            <a class="btn btn-outline-primary m-2" href="{% url 'logout' %}">Logout</a>
+
+							<div class="btn-group dropleft">
+								<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{request.user.profile_image.url}}" alt="codingwithmitch logo" width="40" height="40">
+								<div class="dropdown-menu" aria-labelledby="id_profile_links">
+									<a class="dropdown-item" href="{% url 'account:view' user_id=request.user.id %}">Account</a>
+									<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+								</div>
+							</div>
 						</div>
 
 					</div>
@@ -56,12 +62,22 @@
 		<a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
 		</h5>
 		<form class="search-bar justify-content-start" onsubmit="return executeQuery();">
-			<input type="text" class="form-control" name="q" id="id_q_small" placeholder="Search..." >
+			<input type="text" class="form-control" name="q" id="id_q_small" placeholder="Search...">
 		</form>
 		<div class="d-flex flex-row-reverse flex-grow-1">
 			<nav class="">
 				{% if request.user.is_authenticated %}
-                    <a class="btn btn-outline-primary m-2" href="{% url 'logout' %}">Logout</a>
+				<div class="dropdown dropleft p-2 mt-2">
+					<div class="d-flex flex-row">
+						<div class="btn-group dropleft">
+							<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{request.user.profile_image.url}}" alt="codingwithmitch logo" width="40" height="40">
+							<div class="dropdown-menu" aria-labelledby="id_profile_links">
+								<a class="dropdown-item" href="{% url 'account:view' user_id=request.user.id %}">Account</a>
+								<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				{% else %}
 					<a class="p-2 text-dark" href="{% url 'login' %}">Login</a>
 					<a class="btn btn-outline-primary m-2" href="{% url 'register' %}">Register</a>
@@ -83,7 +99,30 @@
 	    window.location.replace("{% url 'search' %}?q=" + query)
 	    return false
 	}
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
