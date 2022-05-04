@@ -5,3 +5,7 @@
 **/media
 
 **/media_cdn
+
+**/migrations
+
+*.pyc
