@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'personal',
     'account',
     'friend',#python manage.py makemigrations friend
+    'public_chat',
 
     #third party apps
     'django.contrib.admin',
