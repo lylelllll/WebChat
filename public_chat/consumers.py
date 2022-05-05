@@ -1,6 +1,9 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 import json
 from django.contrib.auth import get_user_model
+from django.contrib.humanize.templatetags.humanize import naturaltime, naturalday
+from django.utils import timezone
+from datetime import datetime
 
 User = get_user_model()
 
@@ -59,7 +62,7 @@ class PublicChatConsumer(AsyncJsonWebsocketConsumer):
         await self.channel_layer.group_send(
             "public_chatroom_1",
             {
-                "type": "chat_message",
+                "type": "chat.message",
                 "profile_image": self.scope["user"].profile_image.url,
                 "username": self.scope["user"].username,
                 "user_id": self.scope["user"].id,
@@ -73,6 +76,7 @@ class PublicChatConsumer(AsyncJsonWebsocketConsumer):
         """
         # Send a message down to the client
         print("PublicChatConsumer: chat_message from user #" + str(event["user_id"]))
+        timestamp = calculate_timestamp(timezone.now())
         await self.send_json(
             {
                 "msg_type": MSG_TYPE_MESSAGE,
@@ -80,6 +84,7 @@ class PublicChatConsumer(AsyncJsonWebsocketConsumer):
                 "username": event["username"],
                 "user_id": event["user_id"],
                 "message": event["message"],
+                "natural_timestamp": timestamp,
             },
         )
 
@@ -95,6 +100,28 @@ class ClientError(Exception):
         self.code = code
         if message:
             self.message = message
+
+
+def calculate_timestamp(timestamp):
+    """
+    1. Today or yesterday:
+        - EX: 'today at 10:56 AM'
+        - EX: 'yesterday at 5:19 PM'
+    2. other:
+        - EX: 05/06/2020
+        - EX: 12/28/2020
+    """
+    ts = ""
+    # Today or yesterday
+    if (naturalday(timestamp) == "today") or (naturalday(timestamp) == "yesterday"):
+        str_time = datetime.strftime(timestamp, "%I:%M %p")
+        str_time = str_time.strip("0")
+        ts = f"{naturalday(timestamp)} at {str_time}"
+    # other days
+    else:
+        str_time = datetime.strftime(timestamp, "%m/%d/%Y")
+        ts = f"{str_time}"
+    return str(ts)
 
 
 
